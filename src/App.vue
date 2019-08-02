@@ -7,19 +7,27 @@
       <router-link v-if="auth" :to="{ name: 'dashboard' }"
         >Dashboard</router-link
       >
+
+      <a v-if="auth" class="logout" @click="logout">Log Out</a>
     </div>
     <div class="error" v-if="error">{{ error }}</div>
     <router-view />
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState(["error"]),
     ...mapGetters({
       auth: "isAuthenticated"
     })
+  },
+  methods: {
+    ...mapActions(["autoLogin", "logout"])
+  },
+  created() {
+    this.autoLogin();
   }
 };
 </script>

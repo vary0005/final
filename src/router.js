@@ -21,12 +21,26 @@ export default new Router({
     {
       path: "/signup",
       name: "signup",
-      component: SignUp
+      component: SignUp,
+      beforeEnter(to, from, next) {
+        if (!store.state.idToken) {
+          next();
+        } else {
+          next("/dashboard");
+        }
+      }
     },
     {
       path: "/signin",
       name: "signin",
-      component: SignIn
+      component: SignIn,
+      beforeEnter(to, from, next) {
+        if (!store.state.idToken) {
+          next();
+        } else {
+          next("/dashboard");
+        }
+      }
     },
     {
       path: "/dashboard",
