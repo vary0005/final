@@ -7,7 +7,6 @@
       <router-link v-if="auth" :to="{ name: 'dashboard' }"
         >Dashboard</router-link
       >
-      {{ auth }}
     </div>
     <div class="error" v-if="error">{{ error }}</div>
     <router-view />
