@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from "./store";
+
 import Home from "./views/Home.vue";
 import SignUp from "./views/SignUp.vue";
 import SignIn from "./views/SignIn.vue";
@@ -29,7 +31,14 @@ export default new Router({
     {
       path: "/dashboard",
       name: "dashboard",
-      component: Dashboard
+      component: Dashboard,
+      beforeEnter(to, from, next) {
+        if (store.state.idToken) {
+          next();
+        } else {
+          next("/signin");
+        }
+      }
     }
   ]
 });

@@ -1,19 +1,27 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{ name: 'home' }">Home</router-link>|
-      <router-link :to="{ name: 'signup' }">Sign Up</router-link>|
-      <router-link :to="{ name: 'signin' }">Sign In</router-link>|
-      <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
+      <router-link :to="{ name: 'home' }">Home</router-link>
+      <router-link v-if="!auth" :to="{ name: 'signup' }">Sign Up</router-link>
+      <router-link v-if="!auth" :to="{ name: 'signin' }">Sign In</router-link>
+      <router-link v-if="auth" :to="{ name: 'dashboard' }"
+        >Dashboard</router-link
+      >
+      {{ auth }}
     </div>
     <div class="error" v-if="error">{{ error }}</div>
     <router-view />
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
-  computed: mapState(["error"])
+  computed: {
+    ...mapState(["error"]),
+    ...mapGetters({
+      auth: "isAuthenticated"
+    })
+  }
 };
 </script>
 
@@ -33,6 +41,11 @@ export default {
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  border-right: 1px solid;
+  padding: 0 10px;
+}
+#nav a:last-child {
+  border: none;
 }
 
 #nav a.router-link-exact-active {

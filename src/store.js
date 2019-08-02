@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     idToken: null,
     userId: null,
-    error: ""
+    error: "",
+    user: null
   },
   mutations: {
     AUTH_USER(state, userData) {
@@ -60,6 +61,14 @@ export default new Vuex.Store({
           console.log(error.response.data.error.message);
           commit("SET_ERROR", error.response.data.error.message);
         });
+    }
+  },
+  getters: {
+    isAuthenticated(state) {
+      return state.idToken !== null;
+    },
+    getUser(state) {
+      return state.user;
     }
   }
 });
