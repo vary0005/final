@@ -10,7 +10,7 @@
 
       <a v-if="auth" class="logout" @click="logout">Log Out</a>
     </div>
-    <div class="error" v-if="error">{{ error }}</div>
+    <div v-if="error" @click="clearError" class="error">{{ error }}</div>
     <router-view />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["autoLogin", "logout"])
+    ...mapActions(["clearError", "logout", "autoLogin"])
   },
   created() {
     this.autoLogin();
